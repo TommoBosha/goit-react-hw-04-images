@@ -14,13 +14,14 @@ export default function App()  {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [images, setImages] = useState([]);
-  const [totalHits, setTotalHits] = useState(null);
   const [total, setTotal] = useState(0);
   const [largeImageURL, setLargeImageURL] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [tags, setTags] = useState('');
+
+ 
 
   useEffect(() => { 
 if (!query) return;
@@ -88,10 +89,11 @@ if (!query) return;
 
   
     
-    const showBtn = images.length !== 0 && images.length !== totalHits && !isLoading;
+    const showBtn = images.length !== 0 && images.length !== total && !isLoading;
     return (
       <Container>
         <SearchBar onSubmit={formSubmit} />
+        {error && toast.error(error.message)}
         {isLoading && <Loader />}
         <ImageGallery images={images} onClick={toggleModal} />
         {showBtn && <Button onClick={loadMore} />}
